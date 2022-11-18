@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [data, setData] = useState();
+  const [date, setDate] = useState();
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://raw.githubusercontent.com/ozanerturk/covid19-turkey-api/master/dataset/timeline.json"
+      )
+      .then((res) => setData(res.data[date]))
+      .catch((err) => console.log(err));
+  }, [data, date]);
+
   return (
     <div className="App">
       <div className="container">
@@ -13,6 +26,7 @@ function App() {
               type="text"
               placeholder="GG/AA/YY"
               className="form-control"
+              onChange={(e) => setDate(e.target.value)}
             />
             <table class="table text-white ">
               <thead>
@@ -26,9 +40,15 @@ function App() {
               <tbody>
                 <tr>
                   <th scope="row">1</th>
-                  <td>13600</td>
-                  <td>2500</td>
-                  <td>20</td>
+                  <td>
+                    {data === undefined ? "Data is Loading " : data.totalTests}
+                  </td>
+                  <td>
+                    {data === undefined ? "Data is Loading " : data.patients}
+                  </td>
+                  <td>
+                    {data === undefined ? "Data is Loading " : data.deaths}
+                  </td>
                 </tr>
               </tbody>
             </table>
