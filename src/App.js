@@ -38,7 +38,7 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr className={data === undefined ? "bg-danger" : "bg-success"}>
                   <th scope="row">1</th>
                   <td>
                     {data === undefined ? "Data is Loading " : data.totalTests}
